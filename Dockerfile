@@ -9,10 +9,13 @@ COPY ./app /app
 WORKDIR /app
 EXPOSE 8000
 
+ARG DEV=false
 RUN python -m venv /py && \
     /py/bin/pip install --upgrade pip && \
     /py/bin/pip install -r /tmp/requirements.txt && \
-    pip install flake8 && \
+    if [ $DEV = "true" ]; \
+        then pip install flake8 ; \
+    fi && \
     rm -rf /tmp && \
     adduser \
         --disabled-password \
